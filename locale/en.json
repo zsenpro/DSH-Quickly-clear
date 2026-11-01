@@ -1,0 +1,6 @@
+{
+  "meta": {
+    "title": "Archived Cleanup",
+    "description": "Adds \"Delete conversation\" to an archived conversation's menu, and removes the session log, projection cache and workspace booking with it."
+  }
+}

@@ -1,0 +1,59 @@
+{
+  "name": "@yg/dsh-archived-delete",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "DSH sidebar plugin: delete an archived conversation together with its session log, projection cache and workspace booking.",
+  "author": "YG",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zsenpro/DSH-Quickly-clear.git"
+  },
+  "homepage": "https://github.com/zsenpro/DSH-Quickly-clear#readme",
+  "keywords": [
+    "dsh",
+    "deepseek-harness",
+    "cordis",
+    "plugin",
+    "session-cleanup"
+  ],
+  "exports": {
+    ".": "./index.js",
+    "./client": "./client.js",
+    "./icon": "./icon.svg",
+    "./locale/*.json": "./locale/*.json",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "index.js",
+    "client.js",
+    "cordis.patch.yml",
+    "icon.svg",
+    "README.md",
+    "LICENSE",
+    "verify.js",
+    "locale/en.json",
+    "locale/zh.json"
+  ],
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "platform": "web",
+      "inject": [
+        "@deepseek-ai/dsh-client-locale",
+        "@deepseek-ai/dsh-client-ui-slots",
+        "@deepseek-ai/dsh-client-ui-workspace"
+      ]
+    },
+    "manifestVersion": 1
+  },
+  "scripts": {
+    "test": "node verify.js"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
