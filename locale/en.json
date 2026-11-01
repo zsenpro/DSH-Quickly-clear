@@ -1,6 +1,6 @@
 {
   "meta": {
-    "title": "Archived Cleanup",
+    "title": "DSH-Quickly-clear",
     "description": "Adds \"Delete conversation\" to an archived conversation's menu, and removes the session log, projection cache and workspace booking with it."
   }
 }

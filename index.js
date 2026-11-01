@@ -1,5 +1,5 @@
 /**
- * Host half of @yg/dsh-archived-delete.
+ * Host half of DSH-Quickly-clear.
  *
  * DSH has no "delete one conversation" API. The registry can archive, pin,
  * rename and detach a Session; the persistence store can only create, open,
@@ -27,7 +27,7 @@ import { appendFile, readdir, rm, rmdir, stat } from 'node:fs/promises'
 import { dirname, join } from 'node:path'
 import { homedir } from 'node:os'
 
-const API_PREFIX = '/yg-archived-delete/api'
+const API_PREFIX = '/DSH-Quickly-clear/api'
 const MAX_BODY_BYTES = 8 * 1024
 
 function dshHome() {
@@ -35,7 +35,7 @@ function dshHome() {
   return typeof configured === 'string' && configured !== '' ? configured : join(homedir(), '.dsh')
 }
 
-const TRACE_PATH = join(dshHome(), 'yg-archived-delete.log')
+const TRACE_PATH = join(dshHome(), 'DSH-Quickly-clear.log')
 
 async function appendTrace(line) {
   try {
@@ -55,7 +55,7 @@ export function apply(ctx) {
         path: API_PREFIX,
         handler: (req, res) => handle(ctx, req, res),
       }),
-    'yg-archived-delete: delete one archived conversation and its leftover files',
+    'DSH-Quickly-clear: delete one archived conversation and its leftover files',
   )
 }
 

@@ -1,3 +1,3 @@
 - insert:
-    - id: yg-archived-delete
-      name: '@yg/dsh-archived-delete'
+    - id: quickly-clear
+      name: 'DSH-Quickly-clear'

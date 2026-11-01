@@ -18,7 +18,7 @@ Host 服务里也确实没有删除口子：`workspaceRegistry` 能归档、置�
 
 ## 装上
 
-要求：DSH 桌面版或 `dsh web`（走 profile 机制），Node ≥ 20。
+要求：DSH 桌面版或 `dsh web`（走 profile 机制），Node >= 20。
 
 把仓库放到任意目录，然后二选一。
 
@@ -37,7 +37,7 @@ plugin_manager install_bundle target=<克隆目录>
 ```powershell
 $src = '<克隆目录>'
 $profile = Join-Path $env:USERPROFILE '.dsh\profiles\desktop'
-New-Item -ItemType Junction -Path (Join-Path $profile 'node_modules\@yg\dsh-archived-delete') -Target $src
+New-Item -ItemType Junction -Path (Join-Path $profile 'node_modules\DSH-Quickly-clear') -Target $src
 ```
 
 然后编辑 `$profile\package.json` 两处（路径用正斜杠）：
@@ -45,13 +45,13 @@ New-Item -ItemType Junction -Path (Join-Path $profile 'node_modules\@yg\dsh-arch
 ```jsonc
 {
   "dependencies": {
-    "@yg/dsh-archived-delete": "link:<克隆目录>"
+    "DSH-Quickly-clear": "link:<克隆目录>"
   },
   "dsh": {
     "profile": {
       "bundles": [
         // ... 其它 bundle
-        "@yg/dsh-archived-delete"
+        "DSH-Quickly-clear"
       ]
     }
   }
@@ -62,7 +62,7 @@ New-Item -ItemType Junction -Path (Join-Path $profile 'node_modules\@yg\dsh-arch
 
 ### 卸载
 
-从 `bundles` 里删掉那一行、删掉依赖项、删掉 Junction，再删掉 `~/.dsh/yg-archived-delete.log`。
+从 `bundles` 里删掉那一行、删掉依赖项、删掉 Junction，再删掉 `~/.dsh/DSH-Quickly-clear.log`。
 
 ## 用法
 
@@ -74,7 +74,7 @@ New-Item -ItemType Junction -Path (Join-Path $profile 'node_modules\@yg\dsh-arch
 
 ## 它删什么
 
-`POST /yg-archived-delete/api/delete`，按顺序：
+`POST /DSH-Quickly-clear/api/delete`，按顺序：
 
 1. 所有 workspace 记录的 `sessionIds` 摘掉这个 sessionId（`workspace.mutate`，写盘）
 2. `unarchiveSession` + `unpinSession`
@@ -99,10 +99,10 @@ New-Item -ItemType Junction -Path (Join-Path $profile 'node_modules\@yg\dsh-arch
 
 | 方法 | 路径 | body | 作用 |
 | --- | --- | --- | --- |
-| POST | `/yg-archived-delete/api/delete` | `{"sessionId":"..."}` | 执行清扫，返回删掉的路径与记账 |
-| POST | `/yg-archived-delete/api/inspect` | `{"sessionId":"..."}` | 只读：列出命中的日志目录、缓存文件、是否在运行 |
+| POST | `/DSH-Quickly-clear/api/delete` | `{"sessionId":"..."}` | 执行清扫，返回删掉的路径与记账 |
+| POST | `/DSH-Quickly-clear/api/inspect` | `{"sessionId":"..."}` | 只读：列出命中的日志目录、缓存文件、是否在运行 |
 
-调用记录写在 `~/.dsh/yg-archived-delete.log`。
+调用记录写在 `~/.dsh/DSH-Quickly-clear.log`。
 
 ## 验证
 
@@ -117,8 +117,8 @@ node verify.js
 
 ## 实现备忘
 
-- 菜单行注册进 `sidebar.workspaces.session.menu.item`，`order: 500`（出厂行是 pin 100 / rename 200 / fork 300 / archive 400 / session-id 450）。可见性读 `useWorkspaces(...).archivedSessionIds`，未归档的会话直接不渲染。
-- 确认框注册进 `shell.overlay`，`order: 940`。Esc、点背景、取消都能退；删除中两个按钮都禁用。
+- 菜单行注册进 `sidebar.workspaces.session.menu.item`，cell id `quickly-clear`，`order: 500`（出厂行是 pin 100 / rename 200 / fork 300 / archive 400 / session-id 450）。可见性读 `useWorkspaces(...).archivedSessionIds`，未归档的会话直接不渲染。
+- 确认框注册进 `shell.overlay`，cell id `quickly-clear-dialog`，`order: 940`。Esc、点背景、取消都能退；删除中两个按钮都禁用。
 - 不 `require` 任何 Harness Client 包（`@deepseek-ai/dsh-client-ui-primitives` 之类），控件、图标、hover 样式自己写，颜色只吃 `--dsw-alias-*` token 并带硬编码回退值。
 - 会话目录名的编码跟 JSONL store 保持一致，见 `encodeSegment`：`~` 与非 `[A-Za-z0-9._-]` 转 `~XXXX`，`.` 与 `..` 特判。
 

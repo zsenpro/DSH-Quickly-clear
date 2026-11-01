@@ -1,5 +1,5 @@
 /**
- * Self-check for @yg/dsh-archived-delete.
+ * Self-check for DSH-Quickly-clear.
  *
  * Exercises the pure half of the Host module against a throwaway directory: no
  * Host, no network, nothing under the real DSH_HOME is touched. Run it with
@@ -11,7 +11,7 @@ import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import assert from 'node:assert/strict'
 
-const scratch = await mkdtemp(join(tmpdir(), 'yg-archived-delete-'))
+const scratch = await mkdtemp(join(tmpdir(), 'quickly-clear-'))
 process.env.DSH_HOME = join(scratch, 'home')
 
 const { internals } = await import('./index.js')

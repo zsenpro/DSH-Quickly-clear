@@ -1,5 +1,5 @@
 /**
- * Client half of @yg/dsh-archived-delete.
+ * Client half of DSH-Quickly-clear.
  *
  * Two surfaces, one action:
  *
@@ -15,16 +15,16 @@
  */
 
 window.__ModuleLoader__.load({
-  id: '@yg/dsh-archived-delete',
+  id: 'DSH-Quickly-clear',
   factory(require) {
     const React = require('react')
     const h = React.createElement
 
-    const MENU_ID = 'yg-archived-delete'
-    const OVERLAY_ID = 'yg-archived-delete-dialog'
+    const MENU_ID = 'quickly-clear'
+    const OVERLAY_ID = 'quickly-clear-dialog'
     const MENU_ORDER = 500
     const OVERLAY_ORDER = 940
-    const ROW_CLASS = 'yg-ad-menu-row'
+    const ROW_CLASS = 'qc-menu-row'
 
     let hostContext = null
 
@@ -69,7 +69,7 @@ window.__ModuleLoader__.load({
       const base = new URL(document.baseURI)
       const path = base.pathname
       const directory = path.endsWith('/') ? path : path.slice(0, path.lastIndexOf('/') + 1)
-      return `${base.origin}${directory}yg-archived-delete/api/${method}`
+      return `${base.origin}${directory}DSH-Quickly-clear/api/${method}`
     }
 
     /* --------------------------------------------------------- shared state -- */
@@ -166,7 +166,7 @@ outline:none;}
             type: 'button',
             role: 'menuitem',
             className: ROW_CLASS,
-            'data-yg-archived-delete': sessionId,
+            'data-quickly-clear': sessionId,
             title: labels.menuLabel,
             style: ROW_FRAME,
             onClick: () => {
